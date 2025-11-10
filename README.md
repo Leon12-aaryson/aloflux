@@ -1,59 +1,247 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Aloflux
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Technology solutions designed for African markets. Building the future of offline-first software.
 
-## About Laravel
+## About
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aloflux is a technology company dedicated to creating innovative software solutions that address the unique challenges faced by businesses in African markets. We design, develop, and commercialize software with cleaner, offline-first architectures for African markets.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Modern Landing Page**: Responsive design with smooth scrolling navigation
+- **Contact Form**: Fully functional contact form with email notifications
+- **Email System**: Integrated email sending with Laravel Mail
+- **Offline-First Architecture**: Built with offline-first principles in mind
 
-## Learning Laravel
+## Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Framework**: Laravel 12
+- **PHP**: ^8.2
+- **Frontend**: Tailwind CSS, Vite
+- **Icons**: Boxicons
+- **Email**: Laravel Mail (supports SMTP, Mailgun, SES, Postmark, etc.)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+### Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP ^8.2
+- Composer
+- Node.js and npm
+- SQLite (or MySQL/PostgreSQL)
 
-### Premium Partners
+### Setup Steps
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd aloflux
+   ```
 
-## Contributing
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Install Node dependencies**
+   ```bash
+   npm install
+   ```
 
-## Code of Conduct
+4. **Environment Configuration**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Configure your `.env` file**
+   ```env
+   APP_NAME="Aloflux"
+   APP_URL=http://localhost:8000
+   
+   # Database (SQLite by default)
+   DB_CONNECTION=sqlite
+   DB_DATABASE=/absolute/path/to/database.sqlite
+   
+   # Mail Configuration
+   MAIL_MAILER=smtp
+   MAIL_HOST=smtp.mailtrap.io
+   MAIL_PORT=2525
+   MAIL_USERNAME=your_username
+   MAIL_PASSWORD=your_password
+   MAIL_ENCRYPTION=tls
+   MAIL_FROM_ADDRESS=info@aloflux.com
+   MAIL_FROM_NAME="Aloflux"
+   MAIL_TO_ADDRESS=admin@aloflux.com
+   ```
 
-## Security Vulnerabilities
+6. **Run migrations**
+   ```bash
+   php artisan migrate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. **Build assets**
+   ```bash
+   npm run build
+   ```
+
+8. **Start the development server**
+   ```bash
+   php artisan serve
+   ```
+
+   Or use the dev script for full development environment:
+   ```bash
+   composer run dev
+   ```
+
+## Email Configuration
+
+The application includes a fully functional contact form that sends emails. Configure your email settings in the `.env` file.
+
+### For Development/Testing
+
+**Option 1: Log Driver (Emails written to log file)**
+```env
+MAIL_MAILER=log
+MAIL_FROM_ADDRESS=info@aloflux.com
+MAIL_TO_ADDRESS=admin@aloflux.com
+```
+
+**Option 2: Mailtrap (Recommended for testing)**
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
+MAIL_ENCRYPTION=tls
+```
+
+### For Production
+
+Configure your production email service (SMTP, Mailgun, AWS SES, SendGrid, etc.):
+
+```env
+MAIL_MAILER=smtp  # or mailgun, ses, postmark, etc.
+MAIL_HOST=your_smtp_host
+MAIL_PORT=587
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=info@aloflux.com
+MAIL_FROM_NAME="Aloflux"
+MAIL_TO_ADDRESS=admin@aloflux.com
+```
+
+After changing email configuration, clear the config cache:
+```bash
+php artisan config:clear
+```
+
+For detailed email testing instructions, see [TESTING_EMAILS.md](TESTING_EMAILS.md).
+
+## Project Structure
+
+```
+aloflux/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       └── ContactController.php    # Handles contact form submissions
+│   └── Mail/
+│       └── ContactFormMail.php          # Email mailable class
+├── resources/
+│   ├── views/
+│   │   ├── index.blade.php              # Main landing page
+│   │   └── emails/
+│   │       └── contact.blade.php        # Email template
+│   ├── css/
+│   │   └── app.css                      # Custom styles
+│   └── js/
+│       └── app.js                       # JavaScript
+├── routes/
+│   └── web.php                          # Application routes
+└── config/
+    └── mail.php                          # Mail configuration
+```
+
+## Features Overview
+
+### Contact Form
+
+- **Location**: `/` (scroll to contact section)
+- **Validation**: Server-side validation for all fields
+- **Email Notifications**: Sends formatted email to configured address
+- **User Feedback**: Success/error messages with auto-scroll
+- **Form Reset**: Automatically resets on successful submission
+
+### Email System
+
+- **Mailable Class**: `App\Mail\ContactFormMail`
+- **Email Template**: `resources/views/emails/contact.blade.php`
+- **Features**:
+  - HTML email template with brand styling
+  - Reply-to address set to sender's email
+  - Formatted display of all contact form fields
+  - Professional email design
+
+## Development
+
+### Available Commands
+
+```bash
+# Start development server with all tools
+composer run dev
+
+# Run tests
+composer run test
+
+# Clear configuration cache
+php artisan config:clear
+
+# View logs in real-time
+php artisan pail
+```
+
+### Testing Email
+
+You can test the email functionality using the provided script:
+```bash
+./test-email.sh
+```
+
+Or manually test via Tinker:
+```bash
+php artisan tinker
+```
+
+Then:
+```php
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactFormMail;
+
+Mail::to('test@example.com')->send(new ContactFormMail([
+    'name' => 'Test User',
+    'email' => 'test@example.com',
+    'company' => 'Test Company',
+    'message' => 'This is a test message'
+]));
+```
+
+## Routes
+
+- `GET /` - Landing page
+- `POST /contact` - Contact form submission
 
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Support
+
+For issues or questions, please contact:
+- Email: info@aloflux.com
+- Phone: +256 758 831249
+
+---
