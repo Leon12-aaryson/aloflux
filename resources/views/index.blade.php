@@ -413,28 +413,70 @@
             </div>
 
             <div class="bg-gray-50 rounded-lg p-8 md:p-12 shadow-lg">
-                <form class="space-y-6">
+                <form action="{{ route('contact.send') }}" method="POST" class="space-y-6" id="contact-form">
+                    @csrf
+                    
+                    @if(session('success'))
+                        <div class="bg-green-50 border-l-4 border-green-500 text-green-800 px-4 py-3 rounded-lg mb-6 shadow-sm">
+                            <div class="flex items-center">
+                                <i class='bx bx-check-circle text-2xl mr-2'></i>
+                                <div>
+                                    <p class="font-semibold">Success!</p>
+                                    <p class="text-sm">{{ session('success') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="bg-red-50 border-l-4 border-red-500 text-red-800 px-4 py-3 rounded-lg mb-6 shadow-sm">
+                            <div class="flex items-center">
+                                <i class='bx bx-error-circle text-2xl mr-2'></i>
+                                <div>
+                                    <p class="font-semibold">Error</p>
+                                    <p class="text-sm">{{ session('error') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="bg-red-50 border-l-4 border-red-500 text-red-800 px-4 py-3 rounded-lg mb-6 shadow-sm">
+                            <div class="flex items-start">
+                                <i class='bx bx-error-circle text-2xl mr-2 mt-1'></i>
+                                <div class="flex-1">
+                                    <p class="font-semibold mb-2">Validation Error</p>
+                                    <ul class="list-disc list-inside space-y-1 text-sm">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Name</label>
-                            <input type="text" id="name" name="name" required
+                            <input type="text" id="name" name="name" value="{{ old('name') }}" required
                                 class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-[#FF6D00]/50 transition-all duration-200">
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                            <input type="email" id="email" name="email" required
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" required
                                 class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-[#FF6D00]/50 transition-all duration-200">
                         </div>
                     </div>
                     <div>
                         <label for="company" class="block text-sm font-semibold text-gray-700 mb-2">Company</label>
-                        <input type="text" id="company" name="company"
+                        <input type="text" id="company" name="company" value="{{ old('company') }}"
                             class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-[#FF6D00]/50 transition-all duration-200">
                     </div>
                     <div>
                         <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
                         <textarea id="message" name="message" rows="5" required
-                            class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-[#FF6D00]/50 transition-all duration-200 resize-none"></textarea>
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-[#FF6D00]/50 transition-all duration-200 resize-none">{{ old('message') }}</textarea>
                     </div>
                     <button type="submit"
                         class="w-full px-8 py-4 bg-[#1A1A1A] text-white rounded-lg font-semibold hover:bg-[#E55A00] transition-colors shadow-lg">
@@ -511,12 +553,10 @@
             });
         });
 
-        // Form submission
-        document.querySelector('form')?.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
+        // Auto-reset form on successful submission
+        @if(session('success'))
+            document.getElementById('contact-form')?.reset();
+        @endif
     </script>
 </body>
 
