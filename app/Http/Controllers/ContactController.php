@@ -41,16 +41,17 @@ class ContactController extends Controller
                 'name' => $request->name,
             ]);
 
-            return back()->with('success', 'Thank you for your message! We will get back to you soon.');
+            return redirect()->route('home')->with('success', 'Thank you for your message! We will get back to you soon.')->withFragment('contact');
         } catch (Exception $e) {
             Log::error('Contact form error: ' . $e->getMessage(), [
                 'exception' => $e,
                 'trace' => $e->getTraceAsString(),
             ]);
             
-            return back()
+            return redirect()->route('home')
                 ->with('error', 'Sorry, there was an error sending your message. Please try again later.')
-                ->withInput();
+                ->withInput()
+                ->withFragment('contact');
         }
     }
 }

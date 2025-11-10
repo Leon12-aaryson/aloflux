@@ -417,36 +417,36 @@
                     @csrf
                     
                     @if(session('success'))
-                        <div class="bg-green-50 border-l-4 border-green-500 text-green-800 px-4 py-3 rounded-lg mb-6 shadow-sm">
+                        <div class="bg-green-50 text-green-800 px-6 py-4 rounded-lg mb-6 shadow-md animate-fade-in" id="success-alert">
                             <div class="flex items-center">
-                                <i class='bx bx-check-circle text-2xl mr-2'></i>
+                                <i class='bx bx-check-circle text-3xl mr-3 text-green-600'></i>
                                 <div>
-                                    <p class="font-semibold">Success!</p>
-                                    <p class="text-sm">{{ session('success') }}</p>
+                                    <p class="font-bold text-lg">Success!</p>
+                                    <p class="text-base mt-1">{{ session('success') }}</p>
                                 </div>
                             </div>
                         </div>
                     @endif
 
                     @if(session('error'))
-                        <div class="bg-red-50 border-l-4 border-red-500 text-red-800 px-4 py-3 rounded-lg mb-6 shadow-sm">
+                        <div class="bg-red-50 border-red-500 text-red-800 px-6 py-4 rounded-lg mb-6 shadow-md animate-fade-in" id="error-alert">
                             <div class="flex items-center">
-                                <i class='bx bx-error-circle text-2xl mr-2'></i>
+                                <i class='bx bx-error-circle text-3xl mr-3 text-red-600'></i>
                                 <div>
-                                    <p class="font-semibold">Error</p>
-                                    <p class="text-sm">{{ session('error') }}</p>
+                                    <p class="font-bold text-lg">Error</p>
+                                    <p class="text-base mt-1">{{ session('error') }}</p>
                                 </div>
                             </div>
                         </div>
                     @endif
 
                     @if($errors->any())
-                        <div class="bg-red-50 border-l-4 border-red-500 text-red-800 px-4 py-3 rounded-lg mb-6 shadow-sm">
+                        <div class="bg-red-50 border-red-500 text-red-800 px-6 py-4 rounded-lg mb-6 shadow-md animate-fade-in" id="error-alert">
                             <div class="flex items-start">
-                                <i class='bx bx-error-circle text-2xl mr-2 mt-1'></i>
+                                <i class='bx bx-error-circle text-3xl mr-3 text-red-600'></i>
                                 <div class="flex-1">
-                                    <p class="font-semibold mb-2">Validation Error</p>
-                                    <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <p class="font-bold text-lg">Validation Error</p>
+                                    <ul class="list-disc list-inside space-y-1 text-base mt-1">
                                         @foreach($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
@@ -553,9 +553,20 @@
             });
         });
 
-        // Auto-reset form on successful submission
-        @if(session('success'))
-            document.getElementById('contact-form')?.reset();
+        // Handle form submission feedback
+        @if(session('success') || session('error'))
+            // Scroll to contact section to show the alert
+            setTimeout(function() {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+            
+            // Reset form on success
+            @if(session('success'))
+                document.getElementById('contact-form')?.reset();
+            @endif
         @endif
     </script>
 </body>
